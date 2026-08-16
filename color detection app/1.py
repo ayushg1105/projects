@@ -4,13 +4,26 @@ import pandas as pd
 import argparse
 
 #Creating argument parser to take image path from command line
-"""ap = argparse.ArgumentParser(prog = 'ProgramName',description = 'What the program does',epilog = 'Text at the bottom of help')
-ap.add_argument('-i', '--image', required=True, help="Image Path")
-args = vars(ap.parse_args())"""
-path = 'colorpic.jpg'
+ap = argparse.ArgumentParser()
+ap.add_argument('-i', '--image', default='colorpic.jpg', help="Path to the image")
+args = vars(ap.parse_args())
+path = args['image']
 
 #Reading the image with opencv
 img = cv2.imread(path)
+if img is None:
+    print(f"Error: Could not load image at {path}")
+    exit()
+
+# Resize image to fit on standard screens if it's too large, maintaining aspect ratio
+max_width = 900
+max_height = 700
+height, width = img.shape[:2]
+
+if width > max_width or height > max_height:
+    scaling_factor = min(max_width / width, max_height / height)
+    img = cv2.resize(img, None, fx=scaling_factor, fy=scaling_factor, interpolation=cv2.INTER_AREA)
+
 
 #declaring global variables (are used later on)
 clicked = False
