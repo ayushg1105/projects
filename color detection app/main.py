@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from customtkinter import filedialog
 import subprocess
 import threading
 import os
@@ -36,7 +37,7 @@ class App(ctk.CTk):
             text="1. Image Color Picker", 
             font=ctk.CTkFont(size=18),
             height=50,
-            command=lambda: self.run_script("1.py")
+            command=self.run_app1
         )
         self.btn_app1.pack(pady=10, fill="x")
         
@@ -68,6 +69,22 @@ class App(ctk.CTk):
         
         self.desc3 = ctk.CTkLabel(self.button_frame, text="Real-time multi-color tracking with bounding boxes.", text_color="gray")
         self.desc3.pack(pady=(0, 15))
+
+    def run_app1(self):
+        # Open file dialog to select an image
+        file_path = filedialog.askopenfilename(
+            title="Select an image (Cancel to use default)",
+            filetypes=[("Image files", "*.jpg *.jpeg *.png *.bmp")]
+        )
+        
+        def target():
+            if file_path:
+                subprocess.run(["python", "1.py", "-i", file_path])
+            else:
+                subprocess.run(["python", "1.py"])
+        
+        thread = threading.Thread(target=target)
+        thread.start()
 
     def run_script(self, script_name):
         # Run in a separate thread so it doesn't freeze the GUI
