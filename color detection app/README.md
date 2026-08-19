@@ -63,7 +63,11 @@ Standard RGB color spaces are perceptually non-uniform: two pairs of colors with
 
 ColorPulse Vision converts sRGB signals to CIE $L^*a^*b^*$ coordinates ($L^*$ = Perceptual Lightness, $a^*$ = Green-Red chromatic axis, $b^*$ = Blue-Yellow chromatic axis) and evaluates perceptual distance:
 
-$$\Delta E_{ab}^* = \sqrt{(L_2^* - L_1^*)^2 + (a_2^* - a_1^*)^2 + (b_2^* - b_1^*)^2}$$
+$$\Delta E_{76} = \sqrt{(L_2 - L_1)^2 + (a_2 - a_1)^2 + (b_2 - b_1)^2}$$
+
+Alternatively represented in expanded CIE form:
+
+$$\Delta E^*_{ab} = \sqrt{\left(\Delta L^*\right)^2 + \left(\Delta a^*\right)^2 + \left(\Delta b^*\right)^2}$$
 
 Interpretation scale:
 - $\Delta E \le 1.0$: Imperceptible to the human eye.
